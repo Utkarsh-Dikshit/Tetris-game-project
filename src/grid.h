@@ -2,23 +2,23 @@
 // included once in a compilation unit to avoid duplicate definitions.
 #pragma once
 
-#include <vector>
 #include <raylib.h>
+#include "color.h"
+#include <vector>
+
 using namespace std;
 
 class Grid
 {
 public:
     Grid(); /*Constructor*/
-    void Initiaize();
-    void Print();
+    void Initialize();
     void Draw();
-    int grid [20][10];
+    bool IsCellOutside(int row, int column);
+    int grid [20][11];
 
 private:
-    vector <Color> GetCellColor();
-    int rows, columns;
     int cellsize;
-    /*Using vector to hold the info about colors*/
-    vector <Color> colors; 
+    int numRows, numColumns;
+    vector <Color> colors;
 };
