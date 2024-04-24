@@ -11,7 +11,8 @@
 // }
 
 /* Constructor */
-position::position(int row_, int column_){
+position::position(int row_, int column_)
+{
     row_index = row_;
     column_index = column_;
 }

@@ -5,12 +5,24 @@
 using namespace std;
 
 extern const Color darkGrey;
-extern const Color green;
-extern const Color red;
-extern const Color orange;
-extern const Color yellow;
-extern const Color purple;
-extern const Color cyan;
-extern const Color blue;
+extern const Color OuterGreen;
+extern const Color OuterRed;
+extern const Color OuterOrange;
+extern const Color OuterYellow;
+extern const Color OuterPurple;
+extern const Color OuterCyan;
+extern const Color OuterBlue;
 
-vector<Color> GetCellColor(); 
+extern const Color InnerOrange;
+extern const Color InnerGreen;
+extern const Color InnerRed;
+extern const Color InnerBlue;
+extern const Color InnerPurple;
+extern const Color InnerBlue;
+extern const Color InnerBlue;
+
+extern const Color lightBlue;
+extern const Color darkBlue;
+
+vector<Color> GetOuterCellColor();
+vector<Color> GetInnerCellColor();

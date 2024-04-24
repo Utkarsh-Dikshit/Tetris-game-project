@@ -2,26 +2,39 @@
 
 #include "grid.h"
 #include "blocks.cpp"
+// #include "sounds.h"
 
 class Game
 {
 public:
     Game();
-    block GetRandomBlock();
-    vector<block> GetAllBlocks();
     void Draw();
     void InputHandler();
-
-    void moveLeft();
-    void moveRight();
     void moveDown();
-
-    Grid grid;
+    bool gameOver;
+    int score;
+    // sounds sound;
 
 private:
-    /* We need to include all the block classes */
     vector<block> all_blocks;
+    block GetRandomBlock();
+    vector<block> GetAllBlocks();
     block currBlock;
     block nextBlock;
+    Grid grid;
+    void moveLeft();
+    void moveRight();
+    void Rotate();
     bool IsBlockOutside();
+    bool IsCollision();
+
+    void FixBlock();
+    void UpdateScore(int NumberOfCompletedRow, int BlockMoveDown);
+    void reset();
+
+    void MoveReferenceBlockUP();
+    void MoveReferenceBlockDOWN();
+    void IsReferenceBlockOutside();
+    bool IsBelowRowEmpty();
+    bool IsCurrentSpaceFree();
 };

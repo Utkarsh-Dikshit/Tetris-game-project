@@ -11,18 +11,24 @@ class block
 {
 public:
     block();
-    void Draw();
+    void DrawBlock(int move_in_x, int move_in_y);
+    void DrawReferenceBlock(int move_in_x, int move_in_y);
     void Move(int rows, int column);
     vector<position> GetcellPosition();
+    vector<position> GetcellPositionForReferenceBLock();
+    void MoveReferenceBlock(int rows);
     int id;
-    
-    /* Here 'key' is going to be the rotation state (there will be 4 rotation state) */
-    /* Here 'value' is going to be the vector containing the position of occupied cell */
+    void Rotate();
+    void UnDoRoatation();
+    int row_offset_referenceBlock;
+
+    /* Here 'key' -> rotation state */
+    /* Here 'value' -> vector containing the position of occupied cell */
     map<int, vector<position>> cells;
 
 private:
     int cellsize;
     int rotationState;
     int row_offset, col_offset;
-    vector<Color> colors;
+    vector<Color> OuterBlockColor, InnerBlockColor;
 };
