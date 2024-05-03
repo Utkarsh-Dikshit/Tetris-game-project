@@ -30,7 +30,7 @@ void block::DrawReferenceBlock(int move_in_x, int move_in_y)
     {
 
         Rectangle rec = {(float)item.column_index * cellsize + move_in_x, (float)(item.row_index) * cellsize + move_in_y, (float)cellsize - 1, (float)cellsize - 1};
-        DrawRectangleLinesEx(rec, 0.9, OuterBlockColor[id]);
+        DrawRectangleLinesEx(rec, 2, OuterBlockColor[id]);
     }
 }
 

@@ -28,7 +28,7 @@ void Grid::Draw()
         for (int j = 0; j < numColumns; j++)
         {
             int cellValue = grid[i][j];
-            DrawRectangle(j * cellsize + 10, i * cellsize + 10, cellsize - 1, cellsize - 1, colors[cellValue]);
+            DrawRectangle(j * cellsize + 11, i * cellsize + 11, cellsize - 1, cellsize - 1, colors[cellValue]);
         }
     }
 }
@@ -88,38 +88,3 @@ int Grid::ClearFullRow()
     }
     return completedRow;
 }
-
-// int Grid::CheckEachRow()
-// {
-//     int completeRow = 0;
-//     bool isRowComplete = false;
-//     for (int i = numRows - 1; i >= 0; i--)
-//     {
-//         for (int j = 0; j < numColumns; j++)
-//         {
-//             if (grid[i][j] == 0)
-//             {
-//                 isRowComplete = false;
-//                 break;
-//             }
-//             else
-//             {
-//                 isRowComplete = true;
-//             }
-//         }
-//         if (isRowComplete == true)
-//         {
-//             completeRow++;
-//             for (int k = i; k >= 1; k--)
-//             {
-//                 for (int j = 0; j < numColumns; j++)
-//                 {
-//                     grid[k][j] = grid[k - 1][j];
-//                     grid[k - 1][j] = 0;
-//                 }
-//             }
-//             i++;
-//         }
-//     }
-//     return completeRow;
-// }
