@@ -4,6 +4,7 @@ startWindow::startWindow()
 {
     BGtexture = LoadTexture("resources/Images/bg.png");
     MainLogoTexture = LoadTexture("resources/Images/MainLogo.png");
+    ControlTexture = LoadTexture("resources/Images/Control.png");
 
     LBlockTex = LoadTexture("resources/Images/Blocks/LBlock.png");
     JBlockTex = LoadTexture("resources/Images/Blocks/JBlock.png");
@@ -112,5 +113,4 @@ void startWindow::Draw()
     
     DrawTexturePro(BGtexture, Rectangle{scrolling, 0, (float)BGtexture.width, (float)BGtexture.height}, Rectangle{0, 0, (float)GetScreenWidth(), (float)GetScreenHeight()}, Vector2{0, 0}, 0, WHITE);
     DrawBlocks();
-    DrawTexturePro(MainLogoTexture, Rectangle{0, 0, (float)MainLogoTexture.width, (float)MainLogoTexture.height}, Rectangle{73, 5, (float)MainLogoTexture.width, (float)MainLogoTexture.height}, Vector2{0, 0}, 0, WHITE);
 }

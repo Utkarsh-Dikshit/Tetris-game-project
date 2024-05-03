@@ -8,7 +8,7 @@ class startWindow
 public:
     startWindow();
 
-    Texture2D BGtexture, MainLogoTexture;
+    Texture2D BGtexture, MainLogoTexture, ControlTexture;
     Texture2D LBlockTex, JBlockTex, OBlockTex, IBlockTex, TBlockTex, SBlockTex, ZBlockTex;
 
     struct Blocks;

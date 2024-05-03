@@ -10,7 +10,7 @@ Game::Game()
     nextBlock = GetRandomBlock();
 
     currentRefBlockRowPos = 0;
-    
+
     score = 0;
     highscore = 0;
     highscore_updated = true;
@@ -32,13 +32,13 @@ Game::Game()
     gameOverTex = LoadTexture("resources/Images/Messages/GameOver.png");
 
     InitializeMessageTex();
-    randomMessageIndex = GetRandomValue(0, MessageTex.size() - 2);
 }
 
 Game::~Game()
 {
     UnloadTexture(start.BGtexture);
     UnloadTexture(start.MainLogoTexture);
+    UnloadTexture(start.ControlTexture);
 
     UnloadTexture(start.LBlockTex);
     UnloadTexture(start.JBlockTex);
@@ -53,9 +53,10 @@ Game::~Game()
     UnloadTexture(button.ButtonLevelTex);
     UnloadTexture(button.imBlank);
     UnloadTexture(button.IconPlay);
-    UnloadTexture(button.IconRestart);
+    UnloadTexture(button.IconReset);
     UnloadTexture(button.IconHome);
     UnloadTexture(button.IconMusic);
+    UnloadTexture(button.IconShowControls);
 
     UnloadTexture(MessageTex1);
     UnloadTexture(MessageTex2);
@@ -69,10 +70,14 @@ Game::~Game()
     UnloadFont(button.font2);
 
     UnloadSound(button.sound.RowCleared);
-    UnloadSound(button.sound.Hover);
+    UnloadSound(button.sound.ButtonSound1);
+    UnloadSound(button.sound.ButtonSound2);
+    UnloadSound(button.sound.iconSound1);
+    UnloadSound(button.sound.iconSound2);
     UnloadSound(button.sound.blockMovement);
     UnloadSound(button.sound.BlockPlaced);
     UnloadSound(button.sound.RotateBLock);
+    UnloadSound(button.sound.HighScore);
     UnloadSound(button.sound.GameOver);
     UnloadMusicStream(button.sound.OuterMusic);
     UnloadMusicStream(button.sound.InnerMusic);
@@ -81,12 +86,22 @@ Game::~Game()
 void Game::DrawStart()
 {
     start.Draw();
+    
+    if (button.is_controlShown == true)
+    {
+        DrawRectangleRounded({30, 110, 570, 400}, 0.5, 6, {0, 0, 0, 200});
+        DrawTexturePro(start.ControlTexture, {0, 0, 570, 400}, {30, 110, 570, 400}, {0, 0}, 0, WHITE);
+    }
+    else 
+    {
+        DrawTexturePro(start.MainLogoTexture, Rectangle{0, 0, (float)start.MainLogoTexture.width, (float)start.MainLogoTexture.height}, Rectangle{73, 5, (float)start.MainLogoTexture.width, (float)start.MainLogoTexture.height}, Vector2{0, 0}, 0, WHITE);
+    }
+    
     button.DrawButton();
 }
 
 void Game::DrawMain()
 {
-
     grid.Draw();
     currBlock.DrawBlock(11, 11);
 
@@ -157,6 +172,7 @@ void Game::InitializeMessageTex()
 {
     MessageTex = {MessageTex1, MessageTex2, MessageTex3, MessageTex4, MessageTex5, MessageTex6};
     isMessageDisplay = false;
+    randomMessageIndex = GetRandomValue(0, MessageTex.size() - 2);
 }
 
 void Game::DrawRandomMessage()
@@ -173,7 +189,10 @@ void Game::moveLeft()
     }
     else
     {
-        PlaySound(button.sound.blockMovement);
+        if (button.gameMusic)
+        {
+            PlaySound(button.sound.blockMovement);
+        }
     }
 }
 void Game::moveRight()
@@ -185,7 +204,10 @@ void Game::moveRight()
     }
     else
     {
-        PlaySound(button.sound.blockMovement);
+        if (button.gameMusic)
+        {
+            PlaySound(button.sound.blockMovement);
+        }
     }
 }
 void Game::moveDown()
@@ -198,10 +220,12 @@ void Game::moveDown()
     }
     else
     {
-        PlaySound(button.sound.blockMovement);
+        if (button.gameMusic)
+        {
+            PlaySound(button.sound.blockMovement);
+        }
     }
 }
-
 
 void Game::Rotate()
 {
@@ -212,7 +236,10 @@ void Game::Rotate()
     }
     else
     {
-        PlaySound(button.sound.RotateBLock);
+        if (button.gameMusic)
+        {
+            PlaySound(button.sound.RotateBLock);
+        }
     }
 }
 
@@ -271,6 +298,14 @@ void Game::InputHandler()
     if (IsKeyPressed(KEY_SPACE))
     {
         currBlock.Move(currentRefBlockRowPos, 0);
+        UpdateScore(0, 30);
+
+        // Handling Extreme Cases, for precise movement
+        if (IsBlockOutside() || (IsCurrBlockSpaceFree() == false))
+        {
+            currBlock.Move(-1, 0);
+        }
+        FixBlock();
     }
 }
 
@@ -332,7 +367,11 @@ void Game::FixBlock()
 {
     vector<position> tiles = currBlock.GetcellPosition();
 
-    PlaySound(button.sound.BlockPlaced);
+    if (button.gameMusic)
+    {
+        PlaySound(button.sound.BlockPlaced);
+    }
+
     for (position item : tiles)
     {
         grid.grid[item.row_index][item.column_index] = currBlock.id;
@@ -343,7 +382,10 @@ void Game::FixBlock()
     if (IsCurrBlockSpaceFree() == false)
     {
         StopMusicStream(button.sound.InnerMusic);
-        PlaySound(button.sound.GameOver);
+        if (button.gameMusic)
+        {
+            PlaySound(button.sound.GameOver);
+        }
         button.gameOver = true;
     }
 
@@ -352,7 +394,10 @@ void Game::FixBlock()
     int CompletedRow = grid.ClearFullRow();
     if (CompletedRow > 0)
     {
-        PlaySound(button.sound.RowCleared);
+        if (button.gameMusic)
+        {
+            PlaySound(button.sound.RowCleared);
+        }
         UpdateScore(CompletedRow, 0);
         isMessageDisplay = true;
         last_up_time_MessageDisplay = GetTime();
@@ -398,10 +443,15 @@ void Game::UpdateHighScore()
 {
     if (highscore < score)
     {
-        if(highscore_updated == true)
+        if (highscore_updated == true)
         {
+            if (button.gameMusic)
+            {
+                PlaySound(button.sound.HighScore);
+            }
             randomMessageIndex = 5;
             highscore_updated = false;
+            isMessageDisplay = true;
             last_up_time_MessageDisplay = GetTime();
         }
         highscore = score;

@@ -1,17 +1,5 @@
 #pragma once
-#include "raylib.h"
-
-class sounds{
-public:
-    sounds();
-    Sound GameOver;
-    Sound Hover;
-    Sound blockMovement;
-    Sound RotateBLock;
-    Sound RowCleared;
-    Sound BlockPlaced;
-    Music OuterMusic, InnerMusic;
-};
+#include "sound.h"
 
 class Button
 {
@@ -19,7 +7,7 @@ public:
     Button();
 
     Texture2D ButtonPlayTex, ButtonExitTex, ButtonLevelTex, imBlank;
-    Texture2D IconPlay, IconRestart, IconHome, IconMusic;
+    Texture2D IconPlay, IconReset, IconHome, IconMusic, IconShowControls;
 
     Font font1, font2;
 
@@ -29,14 +17,14 @@ public:
     void DrawButton();
 
     bool gamePause, gameReset, gameMusic, gameOver;
-    bool is_playPressed, is_exitPressed;
+    bool is_playPressed, is_exitPressed, is_controlShown;
     
     float Interval;
     sounds sound;
     
 private:
     int btnState, icnState;
-    int ImageSelection_Level_Button, ImageSelection_Level_Icon_play, ImageSelection_Level_Icon_music;
+    int ImageSelection_Level_Button, ImageSelection_Level_Icon_play, ImageSelection_Level_Icon_music, ImageSelection_Level_Icon_ShowControl;
 
     bool is_levelPressed;
     
@@ -49,5 +37,5 @@ private:
     void InitButton(button *button, Rectangle rec, Texture2D ButtonTex, Color color);
     
     void Initialize_scrolling_Var();
-    float scrolling_button_bg_Ver, scrolling_buttons_Hor, scrolling_icons_bg_Hor, scrolling_icons_Ver;
+    float scrolling_button_Ver, scrolling_buttons_Hor, scrolling_icons_Hor, scrolling_icons_Ver;
 };
