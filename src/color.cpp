@@ -3,7 +3,7 @@
 
 using namespace std;
 
-const Color darkGrey = {26, 31, 40, 255};
+const Color darkGrey = {26, 31, 40, 150};
 
 const Color OuterGreen = {0, 204, 0, 255};
 const Color OuterRed = {204, 0, 0, 255};
@@ -22,7 +22,6 @@ const Color InnerCyan = {51, 255, 255, 255};
 const Color InnerBlue = {51, 51, 255, 255};
 
 const Color lightBlue = {0, 191, 255, 150};
-const Color darkBlue = {25, 36, 70, 255};
 
 vector<Color> GetOuterCellColor()
 {

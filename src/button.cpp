@@ -64,28 +64,24 @@ void Button::InitButton(button *button, Rectangle rec, Texture2D ButtonTex, Colo
 
 void Button::CreateMenu()
 {
-    InitButton(&play, Rectangle{197 + 32, 353.3, 176, 75}, ButtonPlayTex, WHITE);
-    InitButton(&level, Rectangle{197 + 32, 353.3 + 75 + 18, 176, 75}, ButtonLevelTex, WHITE);
-    InitButton(&Exit, Rectangle{197 + 32, 353.3 + 75 + 18 + 75 + 18, 176, 75}, ButtonExitTex, WHITE);
-    InitButton(&icon_show_control, Rectangle{555, 380 + 163 + 10, 50, 50}, IconShowControls, WHITE);
-    InitButton(&link, Rectangle{5, 590 - 5, 170 + 10, 30}, imBlank, ORANGE);
+    InitButton(&play, Rectangle{(float)(GetScreenWidth() - 176) / 2, 353.3, 176, 75}, ButtonPlayTex, WHITE);
+    InitButton(&level, Rectangle{(float)(GetScreenWidth() - 176) / 2, 353.3 + 75 + 18, 176, 75}, ButtonLevelTex, WHITE);
+    InitButton(&Exit, Rectangle{(float)(GetScreenWidth() - 176) / 2, 353.3 + 75 + 18 + 75 + 18, 176, 75}, ButtonExitTex, WHITE);
+    InitButton(&icon_show_control, Rectangle{(float)GetScreenWidth() - 75, (float)(GetScreenHeight() - 67), 50, 50}, IconShowControls, WHITE);
+    InitButton(&link, Rectangle{5, (float)(GetScreenHeight() - 35), 170 + 10, 30}, imBlank, ORANGE);
 
-    InitButton(&icon_play, Rectangle{365 + 8.6, 558, 50, 50}, IconPlay, WHITE);
-    InitButton(&icon_reset, Rectangle{365 + 50 + 2 * 8.6, 558,
-                                50,
-                                50,
-                            },
-               IconReset, WHITE);
-    InitButton(&icon_home, Rectangle{365 + 2 * 50 + 3 * 8.6, 558, 50, 50}, IconHome, WHITE);
-    InitButton(&icon_music, Rectangle{365 + 3 * 50 + 4 * 8.6, 558, 50, 50}, IconMusic, WHITE);
+    InitButton(&icon_play, Rectangle{(float)((GetScreenWidth() - 630)/ 1.5 + (373.6)), (float)(GetScreenHeight() - 72.5), 50, 50}, IconPlay, WHITE);
+    InitButton(&icon_reset, Rectangle{(float)((GetScreenWidth() - 630)/ 1.5 + (432.2)), (float)(GetScreenHeight() - 72.5), 50, 50}, IconReset, WHITE);
+    InitButton(&icon_home, Rectangle{(float)((GetScreenWidth() - 630)/ 1.5 + (490.8)), (float)(GetScreenHeight() - 72.5), 50, 50}, IconHome, WHITE);
+    InitButton(&icon_music, Rectangle{(float)((GetScreenWidth() - 630)/ 1.5 + (549.4)), (float)(GetScreenHeight() - 72.5), 50, 50}, IconMusic, WHITE);
 }
 
 void Button::Initialize_scrolling_Var()
 {
-    scrolling_button_Ver = 640;
-    scrolling_buttons_Hor = 640;
-    scrolling_icons_Hor = 640;
-    scrolling_icons_Ver = 670;
+    scrolling_button_Ver = GetScreenHeight() + 50;
+    scrolling_buttons_Hor = GetScreenWidth() + 50;
+    scrolling_icons_Hor = GetScreenWidth() + 50;
+    scrolling_icons_Ver = GetScreenHeight() + 50;
 }
 
 void Button::ButtonPressed(button button, int button_No, float position_x)
@@ -325,20 +321,28 @@ void Button::linkButtonPressed(button *button)
 
 void Button::DrawButton()
 {
+    if (IsWindowResized()) 
+    {
+        Initialize_scrolling_Var();
+        CreateMenu();
+    }
+
+    scrolling_button_Ver -= 15;
+    if (scrolling_button_Ver <= 315)
+    {
+        scrolling_button_Ver = 315;
+    }
+
+    scrolling_buttons_Hor -= 15;
+    if (scrolling_buttons_Hor <= play.rec.x)
+    {
+        scrolling_buttons_Hor = play.rec.x;
+    }
+
     if (is_controlShown == false)
     {        
-        scrolling_button_Ver -= 15;
-        if (scrolling_button_Ver <= 315)
-        {
-            scrolling_button_Ver = 315;
-        }
-        DrawRectangleRounded({197, /*315*/ scrolling_button_Ver, 176 + 64, Exit.rec.y + 100}, 1.5, 7, {255, 255, 255, 150});
+        DrawRectangleRounded({(float)(GetScreenWidth() - (176 + 64))/2, scrolling_button_Ver, 176 + 64, (float)GetScreenHeight()}, 1.5, 7, {255, 255, 255, 150});
 
-        scrolling_buttons_Hor -= 15;
-        if (scrolling_buttons_Hor <= 197 + 32)
-        {
-            scrolling_buttons_Hor = 197 + 32;
-        }
 
         float frameHeight = (float)play.ButtonTex.height / 3;
         ButtonPressed(play, 1, scrolling_buttons_Hor);
@@ -353,23 +357,28 @@ void Button::DrawButton()
         DrawTexturePro(Exit.ButtonTex, {0, btnState * frameHeight, (float)(Exit.ButtonTex.width), frameHeight}, {scrolling_buttons_Hor, Exit.rec.y, Exit.rec.width, Exit.rec.height}, {0, 0}, 0, Exit.color);
     }
     
-    DrawRectangleRounded({icon_show_control.rec.x - 5 - (197 + 32) + scrolling_buttons_Hor, icon_show_control.rec.y - 5, icon_show_control.rec.width + 10, icon_show_control.rec.height + 10}, 0.5, 7, {0, 0, 0, 200});
+    DrawRectangleRounded({icon_show_control.rec.x - 5 - (play.rec.x) + scrolling_buttons_Hor, icon_show_control.rec.y - 5, icon_show_control.rec.width + 10, icon_show_control.rec.height + 10}, 0.5, 7, {0, 0, 0, 200});
     IconPressed(icon_show_control, 0, 5 + icon_show_control.rec.y - 315 + scrolling_button_Ver);
     DrawTexturePro(icon_show_control.ButtonTex, {0, (float)(icnState * 50), 50, 50}, {icon_show_control.rec.x, icon_show_control.rec.y - 315 + scrolling_button_Ver, icon_show_control.rec.width, icon_show_control.rec.height}, {0, 0}, 0, WHITE);
 
     linkButtonPressed(&link);
-    DrawRectangleRounded({link.rec.x + (197 + 32) - scrolling_buttons_Hor, link.rec.y, link.rec.width, link.rec.height}, 1.5, 6, {0, 0, 0, 150});
+    DrawRectangleRounded({link.rec.x + (play.rec.x) - scrolling_buttons_Hor, link.rec.y, link.rec.width, link.rec.height}, 1.5, 6, {0, 0, 0, 150});
     DrawTextEx(font2, "@Utkarsh-Dikshit", {5 + link.rec.x, 5 + link.rec.y - (315) + scrolling_button_Ver}, 20, 2, link.color);
 }
 
 void Button::DrawIcon()
 {
-    scrolling_icons_Hor -= 10;
-    if (scrolling_icons_Hor <= 365)
+    if (IsWindowResized()) 
     {
-        scrolling_icons_Hor = 365;
+        Initialize_scrolling_Var();
+        CreateMenu();
     }
-    DrawRectangleRounded({scrolling_icons_Hor, 380 + 163 + 10, 163 + 80, 60}, 0.5, 7, {255, 255, 255, 150});
+    scrolling_icons_Hor -= 10;
+    if (scrolling_icons_Hor <= ((float)((GetScreenWidth() - 630)/ 1.5) + 365))
+    {
+        scrolling_icons_Hor = ((float)((GetScreenWidth() - 630)/ 1.5) + 365);
+    }
+    DrawRectangleRounded({scrolling_icons_Hor, (float)GetScreenHeight() - 77, 163 + 80, 60}, 0.5, 7, {255, 255, 255, 150});
 
     float frameHeight = 50.0;
 

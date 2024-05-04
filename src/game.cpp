@@ -31,12 +31,15 @@ Game::Game()
     MessageTex6 = LoadTexture("resources/Images/Messages/HighScoreMessage.png");
     gameOverTex = LoadTexture("resources/Images/Messages/GameOver.png");
 
+    scrolling = 0.0;
+
     InitializeMessageTex();
 }
 
 Game::~Game()
 {
     UnloadTexture(start.BGtexture);
+    UnloadTexture(start.BGtexture2);
     UnloadTexture(start.MainLogoTexture);
     UnloadTexture(start.ControlTexture);
 
@@ -89,12 +92,12 @@ void Game::DrawStart()
     
     if (button.is_controlShown == true)
     {
-        DrawRectangleRounded({30, 110, 570, 400}, 0.5, 6, {0, 0, 0, 200});
-        DrawTexturePro(start.ControlTexture, {0, 0, 570, 400}, {30, 110, 570, 400}, {0, 0}, 0, WHITE);
+        DrawRectangleRounded({(float)(GetScreenWidth() - start.ControlTexture.width)/2, 110, 570, 400}, 0.5, 6, {0, 0, 0, 200});
+        DrawTexturePro(start.ControlTexture, {0, 0, 570, 400}, {(float)(GetScreenWidth() - start.ControlTexture.width)/2, 110, 570, 400}, {0, 0}, 0, WHITE);
     }
     else 
     {
-        DrawTexturePro(start.MainLogoTexture, Rectangle{0, 0, (float)start.MainLogoTexture.width, (float)start.MainLogoTexture.height}, Rectangle{73, 5, (float)start.MainLogoTexture.width, (float)start.MainLogoTexture.height}, Vector2{0, 0}, 0, WHITE);
+        DrawTexturePro(start.MainLogoTexture, Rectangle{0, 0, (float)start.MainLogoTexture.width, (float)start.MainLogoTexture.height}, Rectangle{(float)(GetScreenWidth() - start.MainLogoTexture.width)/2, 5, (float)start.MainLogoTexture.width, (float)start.MainLogoTexture.height}, Vector2{0, 0}, 0, WHITE);
     }
     
     button.DrawButton();
@@ -102,6 +105,11 @@ void Game::DrawStart()
 
 void Game::DrawMain()
 {
+    scrolling += 0.9f;
+    if (scrolling >= start.BGtexture2.width * 2){
+        scrolling = 0;
+    }
+
     grid.Draw();
     currBlock.DrawBlock(11, 11);
 
@@ -113,15 +121,15 @@ void Game::DrawMain()
 
     if (nextBlock.id == 3)
     {
-        nextBlock.DrawBlock(335, 272);
+        nextBlock.DrawBlock(((GetScreenWidth() - 630)/1.5 - (GetScreenWidth() - 630)/2) + 335, 272);
     }
     else if (nextBlock.id == 4)
     {
-        nextBlock.DrawBlock(335, 260);
+        nextBlock.DrawBlock(((GetScreenWidth() - 630)/1.5 - (GetScreenWidth() - 630)/2) + 335, 260);
     }
     else
     {
-        nextBlock.DrawBlock(320, 260);
+        nextBlock.DrawBlock(((GetScreenWidth() - 630)/1.5 - (GetScreenWidth() - 630)/2) + 320, 260);
     }
 
     if (isMessageDisplay == true)
@@ -138,7 +146,7 @@ void Game::DrawMain()
 
     if (button.gameOver == true)
     {
-        DrawTexturePro(gameOverTex, {0, 0, 163, 163}, {394 - 14 + 22.5, 380, 163, 163}, {0, 0}, 0, WHITE);
+        DrawTexturePro(gameOverTex, {0, 0, 163, 163}, {(float)((GetScreenWidth() - 630)/ 1.5 + 394 - 14 + 22.5), (float)((GetScreenHeight() - 620)/ 2) + 380, 163, 163}, {0, 0}, 0, WHITE);
     }
 
     if (button.gameReset == true)
@@ -177,7 +185,7 @@ void Game::InitializeMessageTex()
 
 void Game::DrawRandomMessage()
 {
-    DrawTexturePro(MessageTex[randomMessageIndex], {0, 0, 135, 135}, {394 + 22.5, 380, 135, 135}, {0, 0}, 0, WHITE);
+    DrawTexturePro(MessageTex[randomMessageIndex], {0, 0, 135, 135}, {(float)((GetScreenWidth() - 630)/ 1.5 + 394 + 22.5), (float)((GetScreenHeight() - 620)/ 2) + 380, 135, 135}, {0, 0}, 0, WHITE);
 }
 
 void Game::moveLeft()

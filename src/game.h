@@ -25,6 +25,7 @@ public:
     startWindow start;
     Button button;
 
+    float scrolling;
     int score, highscore;
 
 private:
@@ -35,6 +36,7 @@ private:
     block currBlock;
     block nextBlock;
     Grid grid;
+
 
     bool highscore_updated;
 

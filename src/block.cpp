@@ -17,8 +17,8 @@ void block::DrawBlock(int move_in_x, int move_in_y)
 
     for (position item : tiles)
     {
-        DrawRectangle(item.column_index * cellsize + move_in_x, item.row_index * cellsize + move_in_y, cellsize - 1, cellsize - 1, OuterBlockColor[id]);
-        DrawRectangle(item.column_index * cellsize + move_in_x + (cellsize) / 6, item.row_index * cellsize + move_in_y + (cellsize) / 6, (cellsize - 1) * 4 / 6, (cellsize - 1) * 4 / 6, InnerBlockColor[id]);
+        DrawRectangle((float)(GetScreenWidth() - 630)/2 + item.column_index * cellsize + move_in_x, (float)((GetScreenHeight() - 620)/ 2) + item.row_index * cellsize + move_in_y, cellsize - 1, cellsize - 1, OuterBlockColor[id]);
+        DrawRectangle((float)(GetScreenWidth() - 630)/2 + item.column_index * cellsize + move_in_x + (cellsize) / 6, (float)((GetScreenHeight() - 620)/ 2) + item.row_index * cellsize + move_in_y + (cellsize) / 6, (cellsize - 1) * 4 / 6, (cellsize - 1) * 4 / 6, InnerBlockColor[id]);
     }
 }
 
@@ -29,7 +29,7 @@ void block::DrawReferenceBlock(int move_in_x, int move_in_y)
     for (position item : tiles)
     {
 
-        Rectangle rec = {(float)item.column_index * cellsize + move_in_x, (float)(item.row_index) * cellsize + move_in_y, (float)cellsize - 1, (float)cellsize - 1};
+        Rectangle rec = {(float) (float)(GetScreenWidth() - 630)/2 + item.column_index * cellsize + move_in_x, (float)((GetScreenHeight() - 620)/ 2) + (item.row_index) * cellsize + move_in_y, (float)cellsize - 1, (float)cellsize - 1};
         DrawRectangleLinesEx(rec, 2, OuterBlockColor[id]);
     }
 }

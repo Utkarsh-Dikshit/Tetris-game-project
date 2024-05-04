@@ -3,6 +3,7 @@
 startWindow::startWindow()
 {
     BGtexture = LoadTexture("resources/Images/bg.png");
+    BGtexture2 = LoadTexture("resources/Images/bg2.png");
     MainLogoTexture = LoadTexture("resources/Images/MainLogo.png");
     ControlTexture = LoadTexture("resources/Images/Control.png");
 
@@ -75,11 +76,11 @@ void startWindow::UpdateBlocks(Blocks *blocks, Vector2 position, Vector2 velocit
     {
         blocks->rotationSpeed = GetRandomValue(MinRotationSpeed, MaxRotationSpeed);
     }
-    if (blocks->position.x < 0 || blocks->position.x > 630)
+    if (blocks->position.x < 0 || blocks->position.x > GetScreenWidth())
     {
         blocks->velocity.x = -(blocks->velocity.x);
     }
-    if (blocks->position.y > 620 || blocks->position.y < 0)
+    if (blocks->position.y > GetScreenHeight() || blocks->position.y < 0)
     {
         blocks->velocity.y = -(blocks->velocity.y);
     }
@@ -87,6 +88,8 @@ void startWindow::UpdateBlocks(Blocks *blocks, Vector2 position, Vector2 velocit
 
 void startWindow::DrawBlocks()
 {
+    if (IsWindowResized()) CreateBlocks();
+
     DrawTexturePro(LBlock.Tex, Rectangle{0, 0, (float)LBlock.Tex.width, (float)LBlock.Tex.height}, Rectangle{(float)LBlock.position.x, (float)LBlock.position.y, (float)LBlock.Tex.width, (float)LBlock.Tex.height}, LBlock.origin, LBlock.rotation, WHITE);
     DrawTexturePro(JBlock.Tex, Rectangle{0, 0, (float)JBlock.Tex.width, (float)JBlock.Tex.height}, Rectangle{(float)JBlock.position.x, (float)JBlock.position.y, (float)JBlock.Tex.width, (float)JBlock.Tex.height}, JBlock.origin, JBlock.rotation, WHITE);
     DrawTexturePro(OBlock.Tex, Rectangle{0, 0, (float)OBlock.Tex.width, (float)OBlock.Tex.height}, Rectangle{(float)OBlock.position.x, (float)OBlock.position.y, (float)OBlock.Tex.width, (float)OBlock.Tex.height}, OBlock.origin, OBlock.rotation, WHITE);
@@ -113,4 +116,5 @@ void startWindow::Draw()
     
     DrawTexturePro(BGtexture, Rectangle{scrolling, 0, (float)BGtexture.width, (float)BGtexture.height}, Rectangle{0, 0, (float)GetScreenWidth(), (float)GetScreenHeight()}, Vector2{0, 0}, 0, WHITE);
     DrawBlocks();
+
 }

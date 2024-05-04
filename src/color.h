@@ -22,7 +22,6 @@ extern const Color InnerBlue;
 extern const Color InnerBlue;
 
 extern const Color lightBlue;
-extern const Color darkBlue;
 
 vector<Color> GetOuterCellColor();
 vector<Color> GetInnerCellColor();

@@ -28,9 +28,10 @@ void Grid::Draw()
         for (int j = 0; j < numColumns; j++)
         {
             int cellValue = grid[i][j];
-            DrawRectangle(j * cellsize + 11, i * cellsize + 11, cellsize - 1, cellsize - 1, colors[cellValue]);
+            DrawRectangle((float)(GetScreenWidth() - 630)/2 + j * cellsize + 11, (float)((GetScreenHeight() - 620)/ 2) + i * cellsize + 11, cellsize - 1, cellsize - 1, colors[cellValue]);
         }
     }
+    DrawRectangleLinesEx({(float)(GetScreenWidth() - 630)/2 + 8, (float)((GetScreenHeight() - 620)/ 2) + 8, (float)numColumns*cellsize + 6, (float)numRows*cellsize + 6}, 3, WHITE);
 }
 
 bool Grid::IsCellOutside(int row, int column)
