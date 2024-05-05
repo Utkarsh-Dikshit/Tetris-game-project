@@ -90,8 +90,9 @@ int main()
         outfile << game.highscore;
         outfile.close();
     }
+    
+    UnloadImage(icon);
     CloseAudioDevice();
     CloseWindow();
-
     return 0;
 }
