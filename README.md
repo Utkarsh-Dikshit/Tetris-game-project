@@ -1,5 +1,5 @@
 # Tetris-game-project
-This repository hosts the source code and assets for my latest endeavor - the development of a classic Tetris game!🌟
+This repository hosts the source code and assets for my latest endeavor - the development of a classic Tetris game!🌟 <br>
 This Tetris game project is created solely for educational purposes. It is intended to serve as a learning resource for understanding game development concepts and practicing programming skills.
 
 ![tetris](https://github.com/Utkarsh-Dikshit/Tetris-game-project/assets/143602487/38da4723-8a4c-4023-97b8-01eb71ed91e4) 
