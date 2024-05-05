@@ -17,6 +17,9 @@ This Tetris game project is created solely for educational purposes. It is inten
 - Background music that sets the mood and enhances the gameplay experience.
 - Sound effects for various in-game actions, including block rotation, movement, and line completion.
 
+### User Interface
+- Resizable screen that adapts to different screen sizes, providing flexibility and ensuring optimal viewing and gameplay experience on various devices.
+
 ### Highscore System
 - Highscore feature to track and display the highest scores achieved by players.
 - Highscores are stored externally in a .txt file, allowing players to persist their achievements across sessions.
