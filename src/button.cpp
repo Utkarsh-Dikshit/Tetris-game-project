@@ -246,7 +246,7 @@ void Button::IconPressed(button icon, int Icon_No, float position_y)
             }
             else if (Icon_No == 2)
             {
-                if (gameOver == true && gameMusic)
+                if (gameOver == true || gameMusic)
                 {
                     PlayMusicStream(sound.InnerMusic);
                 }

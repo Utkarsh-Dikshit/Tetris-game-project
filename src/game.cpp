@@ -135,7 +135,7 @@ void Game::DrawMain()
     if (isMessageDisplay == true)
     {
         DrawRandomMessage();
-        if (eventTriggered(6.00, &last_up_time_MessageDisplay))
+        if (eventTriggered(5.00, &last_up_time_MessageDisplay))
         {
             randomMessageIndex = GetRandomValue(0, MessageTex.size() - 2);
             isMessageDisplay = false;
@@ -279,21 +279,21 @@ void Game::InputHandler()
 {
     if (IsKeyDown(KEY_LEFT))
     {
-        if (eventTriggered(0.07, &last_up_time_BlockMovement))
+        if (eventTriggered(0.095, &last_up_time_BlockMovement))
         {
             moveLeft();
         }
     }
     if (IsKeyDown(KEY_RIGHT))
     {
-        if (eventTriggered(0.07, &last_up_time_BlockMovement))
+        if (eventTriggered(0.095, &last_up_time_BlockMovement))
         {
             moveRight();
         }
     }
     if (IsKeyDown(KEY_DOWN))
     {
-        if (eventTriggered(0.07, &last_up_time_BlockMovement))
+        if (eventTriggered(0.095, &last_up_time_BlockMovement))
         {
             moveDown();
             UpdateScore(0, 1);
