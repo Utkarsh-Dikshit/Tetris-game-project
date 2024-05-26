@@ -316,12 +316,6 @@ void Game::InputHandler()
         FixBlock();
     }
 }
-
-void Game::MoveReferenceBlockUP()
-{
-    currBlock.MoveReferenceBlock(-1);
-}
-
 void Game::MoveReferenceBlockDOWN()
 {
     currBlock.MoveReferenceBlock(1);
@@ -332,10 +326,6 @@ void Game::SetReferenceBlockPosition()
     for (; IsBelowRowEmpty() == true;)
     {
         MoveReferenceBlockDOWN();
-    }
-    for (; IsRefBlockSpaceFree() == false;)
-    {
-        MoveReferenceBlockUP();
     }
 }
 
@@ -350,20 +340,6 @@ bool Game::IsBelowRowEmpty()
             is_allCellEmpty = true;
         }
         else
-        {
-            return false;
-        }
-    }
-    return is_allCellEmpty;
-}
-
-bool Game::IsRefBlockSpaceFree()
-{
-    vector<position> tiles = currBlock.GetcellPositionForReferenceBLock();
-    bool is_allCellEmpty = true;
-    for (position item : tiles)
-    {
-        if (grid.grid[item.row_index][item.column_index] != 0 || item.row_index > 19)
         {
             return false;
         }

@@ -58,3 +58,7 @@ This project is provided under the following terms:
 
 ### Resources (Attributions)
 Icon (Tetris) - <a href="https://www.flaticon.com/free-icons/tetris" title="tetris icons">Tetris icons created by Freepik - Flaticon</a>
+
+### License
+
+This project is released under the [MIT License](LICENSE). You are free to modify and distribute the code for educational purposes, subject to the terms outlined in the license file.

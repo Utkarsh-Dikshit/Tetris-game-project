@@ -52,11 +52,9 @@ private:
     void reset();
 
     int currentRefBlockRowPos;
-    void MoveReferenceBlockUP();
     void MoveReferenceBlockDOWN();
     void SetReferenceBlockPosition();
     bool IsBelowRowEmpty();
-    bool IsRefBlockSpaceFree();
 
     int randomMessageIndex;
     bool isMessageDisplay;
